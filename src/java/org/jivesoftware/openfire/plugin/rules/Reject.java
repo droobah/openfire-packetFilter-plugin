@@ -2,6 +2,7 @@ package org.jivesoftware.openfire.plugin.rules;
 
 import org.jivesoftware.openfire.SessionManager;
 import org.jivesoftware.openfire.interceptor.PacketRejectedException;
+import org.jivesoftware.openfire.plugin.pf.PacketFilterConstants;
 import org.jivesoftware.openfire.session.ClientSession;
 import org.jivesoftware.util.JiveGlobals;
 import org.slf4j.Logger;
@@ -37,10 +38,18 @@ public class Reject extends AbstractRule implements Rule {
                 in.setFrom(new JID(pfFrom));
                 String rejectMessage = JiveGlobals.getProperty("pf.rejectMessage", "Your message was rejected by the packet filter");
                 in.setBody(rejectMessage);
-                in.setType(Message.Type.error);
+                //in.setType(Message.Type.error);
+                in.setType(Message.Type.chat);
                 in.setTo(packet.getFrom());
                 String rejectSubject = JiveGlobals.getProperty("pf.rejectSubject", "Rejected");
                 in.setSubject(rejectSubject);
+
+                if (JiveGlobals.getBooleanProperty("pf.rejectAsUser", false)) {
+                    in.setFrom(packet.getTo());
+                    in.setType(Message.Type.chat);
+                    Log.debug("Sending rejection message as " + packet.getTo() + " to " + packet.getFrom());
+                }
+
                 clientSession.process(in);
 
             }
