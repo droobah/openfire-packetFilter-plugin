@@ -1,4 +1,4 @@
-package org.jivesoftware.openfire.plugin;
+package org.jivesoftware.openfire.plugin.pf;
 
 import org.jivesoftware.util.LocaleUtils;
 

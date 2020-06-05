@@ -9,9 +9,7 @@ import org.jivesoftware.openfire.event.GroupEventListener;
 import org.jivesoftware.openfire.group.Group;
 import org.jivesoftware.openfire.group.GroupManager;
 import org.jivesoftware.openfire.group.GroupNotFoundException;
-import org.jivesoftware.openfire.plugin.PacketFilterConstants;
-import org.jivesoftware.openfire.plugin.rules.Rule.SourceDestType;
-import org.jivesoftware.util.StringUtils;
+import org.jivesoftware.openfire.plugin.pf.PacketFilterConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +27,9 @@ public class RuleGroupEventListener implements GroupEventListener {
     public void createPassRule(String source, String destination, String groupName) {
         Pass pass = new Pass();
         pass.setPacketType(Rule.PacketType.Any);
-        pass.setDestType(SourceDestType.Group);
+        pass.setDestType(Rule.SourceDestType.Group);
         pass.setDestination(destination);
-        pass.setSourceType(SourceDestType.Group);
+        pass.setSourceType(Rule.SourceDestType.Group);
         pass.setSource(source);
         pass.isDisabled(false);
         pass.doLog(false);

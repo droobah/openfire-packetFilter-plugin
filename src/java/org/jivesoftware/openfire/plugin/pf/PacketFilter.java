@@ -1,4 +1,4 @@
-package org.jivesoftware.openfire.plugin;
+package org.jivesoftware.openfire.plugin.pf;
 
 import org.jivesoftware.openfire.group.Group;
 import org.jivesoftware.openfire.group.GroupManager;
@@ -33,7 +33,7 @@ public class PacketFilter {
             return null;
         // TODO Would it be better to keep a local copy of the rules?
         for (Rule rule : ruleManager.getRules()) {
-            if (!rule.isDisabled() && typeMatch(rule.getPackeType(), packet)
+            if (!rule.isDisabled() && typeMatch(rule.getPacketType(), packet)
                     && sourceDestMatch(rule.getDestType(), rule.getDestination(), packet.getTo())
                     && sourceDestMatch(rule.getSourceType(), rule.getSource(), packet.getFrom())) {
 

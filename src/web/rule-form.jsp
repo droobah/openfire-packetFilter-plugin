@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="org.jivesoftware.openfire.plugin.PacketFilterConstants"%>
+<%@ page import="org.jivesoftware.openfire.plugin.pf.PacketFilterConstants"%>
 <%@ page import="org.jivesoftware.openfire.XMPPServer,
                  org.jivesoftware.openfire.group.Group"
         %>
-<%@ page import="org.jivesoftware.openfire.plugin.component.ComponentList" %>
+<%@ page import="org.jivesoftware.openfire.plugin.pf.component.ComponentList" %>
 <%@ page import="org.jivesoftware.openfire.plugin.rules.*" %>
 <%@ page import="org.jivesoftware.openfire.user.UserManager" %>
 <%@ page import="org.jivesoftware.util.ParamUtils" %>

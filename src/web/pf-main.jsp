@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="org.jivesoftware.openfire.plugin.PacketFilterUtil"%>
+<%@ page import="org.jivesoftware.openfire.plugin.pf.PacketFilterUtil"%>
 <%@ page import="org.jivesoftware.openfire.component.InternalComponentManager,
-                 org.jivesoftware.openfire.plugin.component.ComponentList,
+                 org.jivesoftware.openfire.plugin.pf.component.ComponentList,
                  org.jivesoftware.openfire.plugin.rules.Rule,
                  org.jivesoftware.openfire.plugin.rules.RuleManager"
         %>
@@ -95,9 +95,9 @@
                           <td><%=PacketFilterUtil.formatRuleSourceDest(rule.getDestination())%></td>
                     <%}%>
                 <% if (rule.isDisabled()) { %>
-                         <td><strike><%=rule.getPackeType()%></strike></td>
+                         <td><strike><%=rule.getPacketType()%></strike></td>
                     <%} else {%>
-                        <td><%=rule.getPackeType().getDisplayName()%></td>
+                        <td><%=rule.getPacketType().getDisplayName()%></td>
                     <%}%>
                 <% if (rule.isDisabled()) { %>
                        <td><strike><%=rule.doLog()%></strike></td>

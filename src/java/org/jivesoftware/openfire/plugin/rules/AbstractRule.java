@@ -75,7 +75,7 @@ public abstract class AbstractRule implements Rule {
         this.packetAction = packetAction;
     }
 
-    public PacketType getPackeType() {
+    public PacketType getPacketType() {
         return packetType;
     }
 

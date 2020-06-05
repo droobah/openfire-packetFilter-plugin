@@ -1,4 +1,4 @@
-package org.jivesoftware.openfire.plugin.component;
+package org.jivesoftware.openfire.plugin.pf.component;
 
 import java.util.Collection;
 import java.util.Iterator;

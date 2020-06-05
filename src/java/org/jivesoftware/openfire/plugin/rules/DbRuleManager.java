@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.jivesoftware.database.DbConnectionManager;
 import org.jivesoftware.openfire.cluster.ClusterManager;
-import org.jivesoftware.openfire.plugin.cluster.RulesUpdatedEvent;
+import org.jivesoftware.openfire.plugin.pf.cluster.RulesUpdatedEvent;
 import org.jivesoftware.util.cache.CacheFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -225,7 +225,7 @@ public class DbRuleManager {
                 pstmt.setInt(1, order);
             }
             rule.setOrder(order);
-            pstmt.setString(2, rule.getPackeType().toString());
+            pstmt.setString(2, rule.getPacketType().toString());
             pstmt.setString(3, rule.getDestination());
             pstmt.setString(4, rule.getSource());
             pstmt.setString(5, rule.getClass().getName());
@@ -378,7 +378,7 @@ public class DbRuleManager {
             con = DbConnectionManager.getConnection();
             pstmt = con.prepareStatement(UPDATE_RULE);
 
-            pstmt.setString(1, rule.getPackeType().toString());
+            pstmt.setString(1, rule.getPacketType().toString());
             pstmt.setString(2, rule.getDestination());
             pstmt.setString(3, rule.getSource());
             pstmt.setString(4, rule.getClass().getName());

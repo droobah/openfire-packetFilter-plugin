@@ -1,4 +1,4 @@
-package org.jivesoftware.openfire.plugin;
+package org.jivesoftware.openfire.plugin.pf;
 
 import java.io.File;
 import java.util.Map;

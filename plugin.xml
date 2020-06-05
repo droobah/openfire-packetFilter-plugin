@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
     <!-- Main plugin class -->
-    <class>org.jivesoftware.openfire.plugin.PacketFilterPlugin</class>
+    <class>org.jivesoftware.openfire.plugin.pf.PacketFilterPlugin</class>
 
 
     <name>Packet Filter</name>

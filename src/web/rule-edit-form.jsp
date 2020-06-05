@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="org.jivesoftware.openfire.plugin.PacketFilterConstants"%>
+<%@ page import="org.jivesoftware.openfire.plugin.pf.PacketFilterConstants"%>
 <%@ page import="org.jivesoftware.openfire.XMPPServer,
                  org.jivesoftware.openfire.component.InternalComponentManager,
                  org.jivesoftware.openfire.group.Group,
-                 org.jivesoftware.openfire.plugin.component.ComponentList"
+                 org.jivesoftware.openfire.plugin.pf.component.ComponentList"
         %>
 <%@ page import="org.jivesoftware.openfire.plugin.rules.*" %>
 <%@ page import="org.jivesoftware.openfire.user.UserManager" %>
@@ -74,7 +74,7 @@
     if (edit) {
         rule = rm.getRuleById(new Integer(request.getParameter("edit")));
         disable = rule.isDisabled().toString();
-        packetType = rule.getPackeType().toString();
+        packetType = rule.getPacketType().toString();
         source = rule.getSource();
         destination = rule.getDestination();
         log = rule.doLog().toString();

@@ -48,7 +48,7 @@ public interface Rule {
 
     public void setPacketAction(Action action);
 
-    public PacketType getPackeType();
+    public PacketType getPacketType();
 
     public void setPacketType(PacketType packetType);
 

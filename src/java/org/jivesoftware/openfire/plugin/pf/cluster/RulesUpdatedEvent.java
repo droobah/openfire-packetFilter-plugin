@@ -1,4 +1,4 @@
-package org.jivesoftware.openfire.plugin.cluster;
+package org.jivesoftware.openfire.plugin.pf.cluster;
 
 import org.jivesoftware.openfire.plugin.rules.RuleManager;
 import org.jivesoftware.openfire.plugin.rules.RuleManagerProxy;
