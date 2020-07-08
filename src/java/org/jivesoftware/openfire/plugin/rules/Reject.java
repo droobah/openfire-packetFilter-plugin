@@ -33,25 +33,33 @@ public class Reject extends AbstractRule implements Rule {
 
         if (packet instanceof Message) {
             Message in = (Message) packet.createCopy();
-            if (clientSession != null && in.getBody() != null) {
+            String rejectSubject = JiveGlobals.getProperty("pf.rejectSubject", "[[Rejected]]");
+            if (rejectSubject.equals(in.getSubject())) {
+                Log.info("Allowing rejection message from " + in.getFrom() + " to " + in.getTo());
+                return null;
+            } else {
+                Message out = new Message();
+                if (clientSession != null && in.getBody() != null) {
+                    Log.info("Inbound message will be rejected " + in.getFrom() + " to " + in.getTo());
+                    Log.debug(in.toString());
 
-                in.setFrom(new JID(pfFrom));
-                String rejectMessage = JiveGlobals.getProperty("pf.rejectMessage", "Your message was rejected by the packet filter");
-                in.setBody(rejectMessage);
-                //in.setType(Message.Type.error);
-                in.setType(Message.Type.chat);
-                in.setTo(packet.getFrom());
-                String rejectSubject = JiveGlobals.getProperty("pf.rejectSubject", "Rejected");
-                in.setSubject(rejectSubject);
+                    out.setFrom(new JID(pfFrom));
+                    String rejectMessage = JiveGlobals.getProperty("pf.rejectMessage", "Your message was rejected by the packet filter");
+                    out.setBody(rejectMessage);
+                    //in.setType(Message.Type.error);
+                    out.setType(Message.Type.chat);
+                    out.setTo(packet.getFrom().toBareJID());
+                    out.setSubject(rejectSubject);
 
-                if (JiveGlobals.getBooleanProperty("pf.rejectAsUser", false)) {
-                    in.setFrom(packet.getTo());
-                    in.setType(Message.Type.chat);
-                    Log.debug("Sending rejection message as " + packet.getTo() + " to " + packet.getFrom());
+                    if (JiveGlobals.getBooleanProperty("pf.rejectAsUser", false)) {
+                        out.setThread(in.getThread());
+                        out.setFrom(packet.getTo().asBareJID());
+                        out.setType(Message.Type.chat);
+                        Log.info("Sending rejection message as " + out.getFrom() + " to " + out.getTo());
+                        Log.debug(out.toString());
+                    }
+                    clientSession.process(out);
                 }
-
-                clientSession.process(in);
-
             }
 
         } else if (packet instanceof Presence) {
@@ -66,7 +74,7 @@ public class Reject extends AbstractRule implements Rule {
 
         }
         if (doLog()) {
-            Log.info("Rejecting packet from " + packet.getFrom() + " to " + packet.getTo());
+            Log.info("Rejecting packet [" + packet.getClass().getSimpleName() + "] from " + packet.getFrom() + " to " + packet.getTo());
         }
         throw new PacketRejectedException();
     }
