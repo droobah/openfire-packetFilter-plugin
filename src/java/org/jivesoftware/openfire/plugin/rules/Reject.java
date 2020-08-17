@@ -38,8 +38,8 @@ public class Reject extends AbstractRule implements Rule {
                 Log.info("Allowing rejection message from " + in.getFrom() + " to " + in.getTo());
                 return null;
             } else {
-                Message out = new Message();
                 if (clientSession != null && in.getBody() != null) {
+                    Message out = new Message();
                     Log.info("Inbound message will be rejected " + in.getFrom() + " to " + in.getTo());
                     Log.debug(in.toString());
 

@@ -17,7 +17,7 @@ public class Pass extends AbstractRule implements Rule {
     @Override
     public Packet doAction(Packet packet) throws PacketRejectedException {
         if (doLog()) {
-            Log.info("Passing from "+packet.getFrom()+" to "+packet.getTo());
+            Log.info("Passing packet [" + packet.getClass().getSimpleName() + "] "+packet.getFrom()+" to "+packet.getTo());
         }
         return null;
     }

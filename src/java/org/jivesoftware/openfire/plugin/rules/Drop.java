@@ -18,7 +18,7 @@ public class Drop extends AbstractRule implements Rule {
     @Override
     public Packet doAction(Packet packet) throws PacketRejectedException {
         if (doLog()) {
-            Log.info("Dropping from "+packet.getFrom()+" to "+packet.getTo());
+            Log.info("Dropping packet [" + packet.getClass().getSimpleName() + "] "+packet.getFrom()+" to "+packet.getTo());
         }
         throw new PacketRejectedException();
     }
