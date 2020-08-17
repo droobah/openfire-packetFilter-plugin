@@ -1,10 +1,19 @@
 package org.jivesoftware.openfire.plugin.pf;
 
+import java.util.List;
+import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.group.Group;
 import org.jivesoftware.openfire.group.GroupManager;
 import org.jivesoftware.openfire.group.GroupNotFoundException;
+import org.jivesoftware.openfire.muc.MultiUserChatManager;
+import org.jivesoftware.openfire.muc.MUCRoom;
+import org.jivesoftware.openfire.muc.MUCRole;
+import org.jivesoftware.openfire.muc.MultiUserChatService;
 import org.jivesoftware.openfire.plugin.rules.Rule;
 import org.jivesoftware.openfire.plugin.rules.RuleManager;
+import org.jivesoftware.openfire.user.UserNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmpp.packet.IQ;
 import org.xmpp.packet.JID;
 import org.xmpp.packet.Message;
@@ -12,8 +21,10 @@ import org.xmpp.packet.Packet;
 import org.xmpp.packet.Presence;
 
 public class PacketFilter {
-    
+    private static final Logger Log = LoggerFactory.getLogger(PacketFilter.class);
     private static PacketFilter packetFilter = new PacketFilter();
+    private XMPPServer server = XMPPServer.getInstance();
+
     RuleManager ruleManager;
 
     private PacketFilter() {
@@ -129,6 +140,36 @@ public class PacketFilter {
         if (group != null) {
             if (group.isUser(packetToFrom)) {
                 result = true;
+            } else {
+                //check to see if this is a MUC
+                MultiUserChatManager mucManager = server.getMultiUserChatManager();
+                MultiUserChatService mucSvc = mucManager.getMultiUserChatService(packetToFrom);
+                if (mucSvc != null) {
+                    MUCRoom mucRoom = mucSvc.getChatRoom(packetToFrom.getNode());
+                    if (mucRoom != null) {
+                        MUCRole user = mucRoom.getOccupantByFullJID(packetToFrom);
+                        if (user != null) {
+                            if (group.isUser(user.getUserAddress())) {
+                                Log.debug("Found user for "+rulegroup+" based on MUC address "+packetToFrom.toString()+" -> "+user.getUserAddress().toString());
+                                result = true;
+                            } else {
+                                Log.debug("Did not find user based on MUC address "+user.getUserAddress().toString());
+                            }
+                        } else {
+                            try {
+                                List<MUCRole> users = mucRoom.getOccupantsByNickname(packetToFrom.getResource());
+                                if (group.isUser(users.get(0).getUserAddress())) {
+                                    Log.debug("Found user for " + rulegroup + " based on MUC address " + packetToFrom.toString() + " -> " + users.get(0).getUserAddress().toString());
+                                    result = true;
+                                } else {
+                                    Log.debug("Did not find user based on MUC address "+users.get(0).getUserAddress().toString());
+                                }
+                            } catch (UserNotFoundException e) {
+                                Log.debug("Did not find MUC user by Nickname "+packetToFrom.getResource());
+                            }
+                        }
+                    }
+                }
             }
         }
         return result;

@@ -48,12 +48,12 @@ public class Reject extends AbstractRule implements Rule {
                     out.setBody(rejectMessage);
                     //in.setType(Message.Type.error);
                     out.setType(Message.Type.chat);
-                    out.setTo(packet.getFrom().toBareJID());
+                    out.setTo(packet.getFrom());
                     out.setSubject(rejectSubject);
 
                     if (JiveGlobals.getBooleanProperty("pf.rejectAsUser", false)) {
                         out.setThread(in.getThread());
-                        out.setFrom(packet.getTo().asBareJID());
+                        out.setFrom(packet.getTo());
                         out.setType(Message.Type.chat);
                         Log.info("Sending rejection message as " + out.getFrom() + " to " + out.getTo());
                         Log.debug(out.toString());
