@@ -142,14 +142,14 @@ public abstract class AbstractRule implements Rule {
         if (packetAction != null)
         sb.append("Type : "+packetAction.toString()+'\n');
         sb.append("Order : "+getOrder()+'\n');
-        sb.append("Diplay Name : "+getDisplayName()+'\n');
+        sb.append("Display Name : "+getDisplayName()+'\n');
         sb.append("Packet Type : "+packetType+'\n');
         sb.append("ID : "+ruleId+'\n');
-        sb.append("Soruce Type : "+sourceType+'\n');
+        sb.append("Source Type : "+sourceType+'\n');
         sb.append("Source : "+source+'\n');
         sb.append("Dest Type : "+destType+'\n');
         sb.append("Destination : "+destination+'\n');
-        sb.append("Loging : "+log+'\n');
+        sb.append("Logging : "+log+'\n');
         sb.append("Disabled : "+disabled+'\n');
         return sb.toString();
     }

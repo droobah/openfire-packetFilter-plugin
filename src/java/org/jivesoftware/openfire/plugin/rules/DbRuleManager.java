@@ -84,6 +84,8 @@ public class DbRuleManager {
                                 rule = new Pass();
                             else if (ruleType.equals(Drop.class.getName()))
                                 rule = new Drop();
+                            else
+                                continue;
  
 
                             rule.setRuleId(rs.getString(2));
@@ -296,7 +298,7 @@ public class DbRuleManager {
             List<Rule> rules = getRules();
 
             for (int i = rules.size(); i > 0; i--) {
-                Rule moveRule = rules.get(i);
+                Rule moveRule = rules.get(i-1);
                 if (new Integer(moveRule.getOrder()) >= order) {
                     updateRule(moveRule, order + 1);
                 } else break;
@@ -318,7 +320,6 @@ public class DbRuleManager {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                rule.setOrder(rs.getInt(1));
                 String ruleType = rs.getString(2);
                 if (ruleType.equals(Reject.class.getName())) {
                     rule = new Reject();
@@ -328,7 +329,11 @@ public class DbRuleManager {
                 }
                 else if (ruleType.equals(Drop.class.getName())) {
                     rule = new Drop();
+                } else {
+                    continue;
                 }
+
+                rule.setOrder(rs.getInt(1));
 
                 rule.setRuleId(rs.getString(3));
                 rule.setPacketType(Rule.PacketType.valueOf(rs.getString(4)));
