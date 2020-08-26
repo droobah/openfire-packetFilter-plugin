@@ -140,7 +140,7 @@ public class PacketFilter {
         if (group != null) {
             if (group.isUser(packetToFrom)) {
                 result = true;
-            } else {
+            } else if (packetToFrom.getNode() != null && packetToFrom.getResource() != null)  {
                 //check to see if this is a MUC
                 MultiUserChatManager mucManager = server.getMultiUserChatManager();
                 MultiUserChatService mucSvc = mucManager.getMultiUserChatService(packetToFrom);
